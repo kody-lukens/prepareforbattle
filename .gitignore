@@ -1,0 +1,6 @@
+Source/**/bin/
+Source/**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
