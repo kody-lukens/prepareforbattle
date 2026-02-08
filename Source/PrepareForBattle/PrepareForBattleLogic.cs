@@ -23,12 +23,15 @@ namespace PrepareForBattle
             }
 
             List<Job> jobs = new List<Job>();
+            bool autoGoJuice = IsAutoGoJuiceEnabled(pawn);
+            bool autoGoJuiceQueued = false;
 
-            if (IsAutoGoJuiceEnabled(pawn))
+            if (autoGoJuice)
             {
                 if (TryIngestDrug(pawn, new[] { "GoJuice" }, settings, out Job autoGoJuiceJob))
                 {
                     jobs.Add(autoGoJuiceJob);
+                    autoGoJuiceQueued = true;
                 }
                 else
                 {
@@ -48,11 +51,16 @@ namespace PrepareForBattle
                 }
             }
 
-            if (pawn.needs?.rest != null && pawn.needs.rest.CurLevelPercentage < settings.RestThreshold)
+            bool canUseDefaultDrugs = !autoGoJuice || !autoGoJuiceQueued;
+            bool drugQueued = autoGoJuiceQueued;
+            List<string> enabledDrugs = GetEnabledDrugDefNames(settings);
+
+            if (canUseDefaultDrugs && !drugQueued && pawn.needs?.rest != null && pawn.needs.rest.CurLevelPercentage < settings.RestThreshold)
             {
-                if (TryIngestDrug(pawn, GetEnabledDrugDefNames(settings), settings, out Job job))
+                if (TryIngestDrug(pawn, enabledDrugs, settings, out Job job))
                 {
                     jobs.Add(job);
+                    drugQueued = true;
                 }
                 else
                 {
@@ -60,9 +68,9 @@ namespace PrepareForBattle
                 }
             }
 
-            if (pawn.needs?.joy != null && pawn.needs.joy.CurLevelPercentage < settings.RecreationThreshold)
+            if (canUseDefaultDrugs && !drugQueued && pawn.needs?.joy != null && pawn.needs.joy.CurLevelPercentage < settings.RecreationThreshold)
             {
-                if (TryIngestDrug(pawn, GetEnabledDrugDefNames(settings), settings, out Job job))
+                if (TryIngestDrug(pawn, enabledDrugs, settings, out Job job))
                 {
                     jobs.Add(job);
                 }

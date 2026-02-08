@@ -20,29 +20,7 @@ namespace PrepareForBattle
                 yield break;
             }
 
-            AutoGoJuiceComponent goJuiceComponent = AutoGoJuiceComponent.GetForCurrentGame();
-            if (goJuiceComponent != null)
-            {
-                yield return new Command_Toggle
-                {
-                    defaultLabel = $"Auto Go-juice: {(goJuiceComponent.IsEnabled(__instance) ? "On" : "Off")}",
-                    defaultDesc = "When enabled, this pawn will queue a Go-juice dose before other prep actions.",
-                    isActive = () => goJuiceComponent.IsEnabled(__instance),
-                    toggleAction = () =>
-                    {
-                        bool next = !goJuiceComponent.IsEnabled(__instance);
-                        goJuiceComponent.SetEnabled(__instance, next);
-                    }
-                };
-            }
-
-            yield return new Command_Action
-            {
-                defaultLabel = "Prepare For Battle",
-                defaultDesc = BattlePrepUtility.BuildGizmoTooltip(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/PrepareForBattle"),
-                action = () => BattlePrepUtility.TryPrepare(__instance)
-            };
+            yield return new PrepareForBattleCommand(__instance);
         }
 
         private static bool ShouldShow(Pawn pawn)
