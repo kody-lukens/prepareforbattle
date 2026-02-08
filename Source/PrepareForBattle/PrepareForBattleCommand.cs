@@ -55,11 +55,7 @@ namespace PrepareForBattle
                 Texture2D icon = goJuiceDef.uiIcon;
                 if (icon != null)
                 {
-                    Widgets.DrawTextureFitted(rect, icon, 1f);
-                }
-                else
-                {
-                    Widgets.DefIcon(rect, goJuiceDef);
+                    GUI.DrawTexture(rect, icon);
                 }
             }
             else
