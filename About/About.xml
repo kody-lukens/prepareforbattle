@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>Prepare For Battle</name>
-  <author>kodyl</author>
-  <packageId>kodyl.prepareforbattle</packageId>
+  <author>cocoapebbles</author>
+  <packageId>cocoapebbles.prepareforbattle</packageId>
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
+  <description>Drafted pawns can quickly prep by eating and taking a drug based on configurable thresholds and policies.</description>
 </ModMetaData>

@@ -36,6 +36,9 @@ namespace PrepareForBattle
 
             listing.Gap();
             listing.CheckboxLabeled("Respect drug policy", ref Settings.RespectDrugPolicy);
+            listing.Label(Settings.RespectDrugPolicy
+                ? "Only use drugs that this pawn's current drug policy allows."
+                : "Ignore drug policy (still requires the drug to be enabled in Allowed drugs).");
 
             listing.GapLine();
             listing.Label("Search radius (tiles):");

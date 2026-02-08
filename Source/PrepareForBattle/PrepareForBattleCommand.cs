@@ -52,7 +52,15 @@ namespace PrepareForBattle
             ThingDef goJuiceDef = DefDatabase<ThingDef>.GetNamedSilentFail("GoJuice");
             if (goJuiceDef != null)
             {
-                Widgets.DefIcon(rect, goJuiceDef);
+                Texture2D icon = goJuiceDef.uiIcon;
+                if (icon != null)
+                {
+                    Widgets.DrawTextureFitted(rect, icon, 1f);
+                }
+                else
+                {
+                    Widgets.DefIcon(rect, goJuiceDef);
+                }
             }
             else
             {

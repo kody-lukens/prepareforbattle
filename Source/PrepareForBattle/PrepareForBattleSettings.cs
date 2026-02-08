@@ -35,7 +35,7 @@ namespace PrepareForBattle
         public float RestThreshold = 0.3f;
         public float RecreationThreshold = 0.3f;
         public bool RespectDrugPolicy = true;
-        public int SearchRadiusTiles = 25;
+        public int SearchRadiusTiles = 45;
         public bool SearchOnMap = true;
         public bool InventoryFirst = true;
         public bool HasInitializedDefaults;
@@ -47,7 +47,7 @@ namespace PrepareForBattle
             Scribe_Values.Look(ref RestThreshold, "RestThreshold", 0.3f);
             Scribe_Values.Look(ref RecreationThreshold, "RecreationThreshold", 0.3f);
             Scribe_Values.Look(ref RespectDrugPolicy, "RespectDrugPolicy", true);
-            Scribe_Values.Look(ref SearchRadiusTiles, "SearchRadiusTiles", 25);
+            Scribe_Values.Look(ref SearchRadiusTiles, "SearchRadiusTiles", 45);
             Scribe_Values.Look(ref SearchOnMap, "SearchOnMap", true);
             Scribe_Values.Look(ref InventoryFirst, "InventoryFirst", true);
             Scribe_Values.Look(ref HasInitializedDefaults, "HasInitializedDefaults", false);

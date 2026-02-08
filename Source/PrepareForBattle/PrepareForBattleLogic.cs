@@ -462,24 +462,7 @@ namespace PrepareForBattle
 
         public static string BuildGizmoTooltip()
         {
-            PrepareForBattleSettings settings = PrepareForBattleMod.Settings;
-            if (settings == null)
-            {
-                return "Queue actions to prepare for battle.";
-            }
-
-            return string.Join(Environment.NewLine, new[]
-            {
-                "Queue actions to prepare for battle.",
-                $"Hunger threshold: {settings.HungerThreshold:P0}",
-                $"Rest threshold: {settings.RestThreshold:P0}",
-                $"Recreation threshold: {settings.RecreationThreshold:P0}",
-                $"Search radius: {settings.SearchRadiusTiles} tiles",
-                $"Inventory first: {settings.InventoryFirst}",
-                $"Search on map: {settings.SearchOnMap}",
-                $"Respect drug policy: {settings.RespectDrugPolicy}",
-                "Queues actions: Eat -> Drug -> return to drafted wait."
-            });
+            return "Eat food & take a drug if Food, Rest, or Recreation are below designated thresholds (see mod settings).";
         }
     }
 }
