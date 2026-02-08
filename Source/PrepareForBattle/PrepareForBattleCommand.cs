@@ -49,14 +49,16 @@ namespace PrepareForBattle
 
         private void DrawOverlay(Rect rect)
         {
-            ThingDef goJuiceDef = DefDatabase<ThingDef>.GetNamedSilentFail("GoJuice");
-            if (goJuiceDef != null)
+            ThingDef goJuiceDef = ThingDef.Named("GoJuice");
+            Texture2D icon = goJuiceDef?.uiIcon;
+            if (icon == null && !string.IsNullOrWhiteSpace(goJuiceDef?.uiIconPath))
             {
-                Texture2D icon = goJuiceDef.uiIcon;
-                if (icon != null)
-                {
-                    GUI.DrawTexture(rect, icon);
-                }
+                icon = ContentFinder<Texture2D>.Get(goJuiceDef.uiIconPath, false);
+            }
+
+            if (icon != null)
+            {
+                GUI.DrawTexture(rect, icon, ScaleMode.ScaleToFit, true);
             }
             else
             {
