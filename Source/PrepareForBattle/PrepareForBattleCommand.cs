@@ -37,7 +37,7 @@ namespace PrepareForBattle
             GizmoResult result = base.GizmoOnGUI(topLeft, maxWidth, parms);
 
             DrawOverlay(overlayRect);
-            TooltipHandler.TipRegion(overlayRect, "Auto Go-juice for this pawn");
+            TooltipHandler.TipRegion(overlayRect, "Enable automatic Go-Juice usage for this pawn when using Prepare For Battle.");
 
             if (overlayClicked)
             {
