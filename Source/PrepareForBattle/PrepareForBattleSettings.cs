@@ -31,9 +31,9 @@ namespace PrepareForBattle
     {
         public static readonly string[] DefaultDrugDefs = { "WakeUp", "PsychiteTea", "Beer", "Ambrosia" };
 
-        public float HungerThreshold = 0.3f;
-        public float RestThreshold = 0.3f;
-        public float RecreationThreshold = 0.3f;
+        public float HungerThreshold = 0.6f;
+        public float RestThreshold = 0.6f;
+        public float RecreationThreshold = 0.6f;
         public bool RespectDrugPolicy = true;
         public int SearchRadiusTiles = 45;
         public bool SearchOnMap = true;
@@ -43,9 +43,9 @@ namespace PrepareForBattle
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref HungerThreshold, "HungerThreshold", 0.3f);
-            Scribe_Values.Look(ref RestThreshold, "RestThreshold", 0.3f);
-            Scribe_Values.Look(ref RecreationThreshold, "RecreationThreshold", 0.3f);
+            Scribe_Values.Look(ref HungerThreshold, "HungerThreshold", 0.6f);
+            Scribe_Values.Look(ref RestThreshold, "RestThreshold", 0.6f);
+            Scribe_Values.Look(ref RecreationThreshold, "RecreationThreshold", 0.6f);
             Scribe_Values.Look(ref RespectDrugPolicy, "RespectDrugPolicy", true);
             Scribe_Values.Look(ref SearchRadiusTiles, "SearchRadiusTiles", 45);
             Scribe_Values.Look(ref SearchOnMap, "SearchOnMap", true);
