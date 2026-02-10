@@ -20,25 +20,33 @@ namespace PrepareForBattle
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            float gap = 12f;
+            float columnWidth = (inRect.width - gap) * 0.5f;
+            Rect leftRect = new Rect(inRect.x, inRect.y, columnWidth, inRect.height);
+            Rect rightRect = new Rect(leftRect.xMax + gap, inRect.y, columnWidth, inRect.height);
+
             Listing_Standard listing = new Listing_Standard();
-            listing.Begin(inRect);
+            listing.Begin(leftRect);
 
             listing.Label($"Hunger threshold: {Settings.HungerThreshold:P0}");
             Settings.HungerThreshold = listing.Slider(Settings.HungerThreshold, 0f, 1f);
 
-            listing.Gap();
             listing.Label($"Rest threshold: {Settings.RestThreshold:P0}");
             Settings.RestThreshold = listing.Slider(Settings.RestThreshold, 0f, 1f);
 
-            listing.Gap();
             listing.Label($"Recreation threshold: {Settings.RecreationThreshold:P0}");
             Settings.RecreationThreshold = listing.Slider(Settings.RecreationThreshold, 0f, 1f);
 
             listing.Gap();
             listing.CheckboxLabeled("Respect drug policy", ref Settings.RespectDrugPolicy);
-            listing.Label(Settings.RespectDrugPolicy
-                ? "Only use drugs that this pawn's current drug policy allows."
-                : "Ignore drug policy (still requires the drug to be enabled in Allowed drugs).");
+
+            listing.GapLine();
+            listing.CheckboxLabeled("Enable food eating", ref Settings.EnableFoodEating);
+            listing.CheckboxLabeled("Enable drug use", ref Settings.EnableDrugUse);
+            listing.CheckboxLabeled("Enable weapon equip", ref Settings.EnableWeaponEquip);
+            listing.CheckboxLabeled("Enable armor equip", ref Settings.EnableArmorEquip);
+            listing.CheckboxLabeled("Enable utility equip", ref Settings.EnableUtilityEquip);
+            listing.CheckboxLabeled("Respect clothing restrictions", ref Settings.RespectClothingRestrictions);
 
             listing.GapLine();
             listing.Label("Search radius (tiles):");
@@ -47,8 +55,6 @@ namespace PrepareForBattle
             Settings.SearchRadiusTiles = Mathf.Clamp(Settings.SearchRadiusTiles, 1, 250);
 
             listing.Gap();
-            listing.CheckboxLabeled("Search on map when not in inventory", ref Settings.SearchOnMap);
-            listing.CheckboxLabeled("Inventory first", ref Settings.InventoryFirst);
 
             listing.GapLine();
             DrawDrugAddMenu(listing);
@@ -56,6 +62,9 @@ namespace PrepareForBattle
             DrawAllowedDrugsSection(listing);
 
             listing.End();
+
+            DrawActionOrder(rightRect);
+
             Settings.Write();
         }
 
@@ -183,6 +192,60 @@ namespace PrepareForBattle
             }
 
             Settings.AllowedDrugs.Insert(0, new DrugEntry(defName, true));
+        }
+
+        private void DrawActionOrder(Rect rect)
+        {
+            Listing_Standard listing = new Listing_Standard();
+            listing.Begin(rect);
+
+            listing.Label("Action order");
+
+            List<string> order = Settings.ActionOrder;
+            if (order == null || order.Count == 0)
+            {
+                order = new List<string> { "Drug", "Food", "Weapon", "Armor" };
+                Settings.ActionOrder = order;
+            }
+
+            bool changed = false;
+            for (int i = 0; i < order.Count; i++)
+            {
+                string action = order[i];
+                Rect row = listing.GetRect(Text.LineHeight);
+                float buttonWidth = 38f;
+                float gap = 4f;
+                float buttonsWidth = buttonWidth * 2f + gap;
+
+                Rect labelRect = new Rect(row.x, row.y, row.width - buttonsWidth, row.height);
+                Rect upRect = new Rect(labelRect.xMax + gap, row.y, buttonWidth, row.height);
+                Rect downRect = new Rect(upRect.xMax + gap, row.y, buttonWidth, row.height);
+
+                Widgets.Label(labelRect, action);
+
+                if (Widgets.ButtonText(upRect, "Up") && i > 0)
+                {
+                    string temp = order[i - 1];
+                    order[i - 1] = order[i];
+                    order[i] = temp;
+                    changed = true;
+                }
+
+                if (Widgets.ButtonText(downRect, "Down") && i < order.Count - 1)
+                {
+                    string temp = order[i + 1];
+                    order[i + 1] = order[i];
+                    order[i] = temp;
+                    changed = true;
+                }
+
+                if (changed)
+                {
+                    break;
+                }
+            }
+
+            listing.End();
         }
     }
 }

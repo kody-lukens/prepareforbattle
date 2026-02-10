@@ -6,5 +6,6 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
+  <modVersion>1.1</modVersion>
   <description>Drafted pawns can quickly prepare for battle by eating and taking a drug based on configurable thresholds and policies. This helps them avoid mental breaks when drafted.</description>
 </ModMetaData>
